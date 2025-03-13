@@ -15,7 +15,7 @@ const { checkForauthenticationCookie, } = require('./middleware/authentication')
 app.set('view engine',  'ejs');
 app.set('views', path.resolve("./views"))
 
-mongoose.connect(MONGODB_URI, {
+mongoose.connect(MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     serverSelectionTimeoutMS: 5000,  // Fail fast if MongoDB is unreachable
