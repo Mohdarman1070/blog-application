@@ -19,14 +19,11 @@ app.set('views', path.resolve("./views"))
 mongoose.connect(MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 5000,  // Fail fast if MongoDB is unreachable
-    connectTimeoutMS: 10000, // Give more time to connect
 })
 .then(() => console.log("✅ MongoDB Connected Successfully!"))
-.catch(err => {
-    console.error("❌ MongoDB Connection Error:", err);
-    process.exit(1); // Exit if DB is not connected
-});
+.catch(err => console.error("❌ MongoDB Connection Error:", err));
+
+
 app.use(cookiePaser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.resolve("./public")));
