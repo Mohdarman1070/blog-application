@@ -4,6 +4,7 @@ const express = require('express');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const MONGO_URL = process.env.MONGO_URL;
 const path = require('path')
 const mongoose = require('mongoose')
 const cookiePaser = require('cookie-parser');
