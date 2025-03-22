@@ -41,6 +41,36 @@ router.post("/", upload.single("coverImage"), async (req, res) => {
   return res.redirect(`/blog/${blog._id}`);
 });
 
+router.post('/update/:blogid', upload.single("coverImage"), async (req, res) => {
+  try {
+    const { title, body } = req.body;
+    const blogId = req.params.blogid;
+
+    const updateData = {
+      title,
+      body,
+      createdBy: req.user,
+    };
+
+    // Only update coverImageURL if a file is uploaded
+    if (req.file) {
+      updateData.coverImageURL = `/uploads/${req.file.filename}`;
+    }
+
+    const blog = await Blog.findByIdAndUpdate(blogId, updateData, { new: true });
+
+    if (!blog) {
+      return res.status(404).send("Blog not found");
+    }
+
+    res.redirect('/');
+  } catch (err) {
+    console.error("Error updating blog:", err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
 router.post("/comment/:blogId", async (req, res) => {
   await Comment.create({
     content: req.body.content,
@@ -61,6 +91,19 @@ router.get('/:id', async(req, res) =>{
     blog,
     comments,
   })
+
+})
+
+
+router.get('/delete/:id', async (req, res) =>{
+  const del = await Blog.findByIdAndDelete(req.params.id);
+  res.redirect('/')
+})
+
+
+router.get('/edit/:Blogid', async (req, res) =>{
+  const blog = await Blog.findById(req.params.Blogid);
+  res.render('edit', {blog})
 
 })
 

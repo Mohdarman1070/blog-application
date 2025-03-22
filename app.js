@@ -16,12 +16,9 @@ const { checkForauthenticationCookie, } = require('./middleware/authentication')
 app.set('view engine',  'ejs');
 app.set('views', path.resolve("./views"))
 
-mongoose.connect(MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => console.log("✅ MongoDB Connected Successfully!"))
-.catch(err => console.error("❌ MongoDB Connection Error:", err));
+mongoose.connect(MONGO_URL)
+  .then(() => console.log("✅ MongoDB Connected Successfully!"))
+  .catch(err => console.error("❌ MongoDB Connection Error:", err));
 
 
 app.use(cookiePaser());
